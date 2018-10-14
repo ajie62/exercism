@@ -6,21 +6,17 @@
 //
 
 /**
- * @param $a
- * @param $b
+ * @param string $a
+ * @param string $b
  * @return int
  */
-function distance($a, $b)
+function distance(string $a, string $b): int
 {
-    if (strlen($a) !== strlen($b))
+    $a = str_split($a);
+    $b = str_split($b);
+
+    if (count($a) !== count($b))
         throw new InvalidArgumentException('DNA strands must be of equal length.');
 
-    $nb = $i = 0;
-
-    while ($i < strlen($a)) {
-        ($a[$i] === $b[$i]) ?: $nb++;
-        $i++;
-    }
-
-    return $nb;
+    return count(array_diff_assoc($a, $b));
 }
