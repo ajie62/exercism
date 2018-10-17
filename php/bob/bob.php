@@ -5,11 +5,14 @@
  */
 class Bob
 {
-    const RESPONSE_TO_NOTHING = 'Fine. Be that way!';
-    const RESPONSE_TO_YELL = 'Whoa, chill out!';
-    const RESPONSE_TO_QUESTION = 'Sure.';
-    const RESPONSE_TO_YELLING_QUESTION = 'Calm down, I know what I\'m doing!';
-    const RESPONSE_DEFAULT = 'Whatever.';
+    /** @var array List of responses */
+    const RESPONSES = [
+        'NOTHING' => 'Fine. Be that way!',
+        'YELL' => 'Whoa, chill out!',
+        'QUESTION' => 'Sure.',
+        'YELLING_QUESTION' => 'Calm down, I know what I\'m doing!',
+        'DEFAULT' => 'Whatever.'
+    ];
 
     /**
      * Returns a response depending on the text nature.
@@ -21,23 +24,23 @@ class Bob
     {
         $text = $this->trimText($text);
 
-        if ($this->isEmpty($text)) {
-            return static::RESPONSE_TO_NOTHING;
+        if (Bob::isEmpty($text)) {
+            return static::RESPONSES['NOTHING'];
         }
 
-        if ($this->isYelling($text) && $this->isQuestion($text)) {
-            return static::RESPONSE_TO_YELLING_QUESTION;
+        if (Bob::isYelling($text) && Bob::isQuestion($text)) {
+            return static::RESPONSES['YELLING_QUESTION'];
         }
 
-        if ($this->isYelling($text)) {
-            return static::RESPONSE_TO_YELL;
+        if (Bob::isYelling($text)) {
+            return static::RESPONSES['YELL'];
         }
 
-        if ($this->isQuestion($text)) {
-            return static::RESPONSE_TO_QUESTION;
+        if (Bob::isQuestion($text)) {
+            return static::RESPONSES['QUESTION'];
         }
 
-        return static::RESPONSE_DEFAULT;
+        return static::RESPONSES['DEFAULT'];
     }
 
     /**
@@ -45,7 +48,7 @@ class Bob
      * @param string $text
      * @return bool
      */
-    public function isEmpty(string $text): bool
+    private static function isEmpty(string $text): bool
     {
         return empty($text);
     }
@@ -55,7 +58,7 @@ class Bob
      * @param string $text
      * @return bool
      */
-    public function isQuestion(string $text): bool
+    private static function isQuestion(string $text): bool
     {
         return "?" === mb_substr($text, -1);
     }
@@ -65,7 +68,7 @@ class Bob
      * @param string $text
      * @return bool
      */
-    public function isYelling(string $text): bool
+    private static function isYelling(string $text): bool
     {
         return $text === mb_strtoupper($text) && $text !== mb_strtolower($text);
     }
@@ -75,7 +78,7 @@ class Bob
      * @param string $text
      * @return string
      */
-    public function trimText(string $text): string
+    private static function trimText(string $text): string
     {
         return trim($text);
     }
