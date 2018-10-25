@@ -7,6 +7,5 @@
  */
 function toRna(string $strand): string
 {
-    $trans = ["G" => "C", "C" => "G", "T" => "A", "A" => "U"];
-    return strtr($strand, $trans);
+    return strtr($strand, 'GCTA', 'CGAU');
 }
